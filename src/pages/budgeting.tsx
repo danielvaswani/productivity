@@ -61,7 +61,7 @@ export default function Budgeting() {
 
   return (
     <>
-      <div className="container flex flex-col items-center justify-center gap-3 bg-gray-800 px-4 py-16">
+      <div className="container flex flex-col items-center justify-center gap-3 px-4 py-16">
         <PieChart width={500} height={500} data={pieData} />
         <div className="text-5xl">Your Balance</div>
         <div className={`text-4xl ${balance < 0 ? "text-red-500" : ""}`}>

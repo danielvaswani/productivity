@@ -14,18 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
@@ -62,7 +50,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    transactions  Transaction[]
+    todos         Todo[]
 }
 
 model VerificationToken {
@@ -71,4 +60,24 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Todo {
+    id          Int     @id @default(autoincrement())  
+    description String
+    isComplete  Boolean
+    pos         Int     @default(autoincrement())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    value     Decimal  @db.Decimal(12, 2)
+    category  String   @default("Other")
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
 }

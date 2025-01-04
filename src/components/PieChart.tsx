@@ -17,7 +17,7 @@ import { animated, useTransition, interpolate } from "@react-spring/web";
 
 // accessor functions
 // const frequency = (d: LetterFrequency) => d.frequency;
-const value = (d: { category: string; value: number }) => Number(d.value);
+const value = (d: { label: string; value: number }) => Number(d.value);
 
 const defaultMargin = { top: 20, right: 20, bottom: 20, left: 20 };
 
@@ -26,7 +26,7 @@ export type PieProps = {
   height: number;
   margin?: typeof defaultMargin;
   animate?: boolean;
-  transactions: { category: string; value: number }[];
+  data: { label: string; value: number }[];
 };
 
 export default function PieChart({
@@ -34,12 +34,25 @@ export default function PieChart({
   height,
   margin = defaultMargin,
   animate = true,
-  transactions = [],
+  data = [],
 }: PieProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const categorizedData = data.reduce(
+    (acc, item) => {
+      const existingItem = acc.find((d) => d.label === item.label);
+      if (existingItem) {
+        existingItem.value += item.value;
+      } else {
+        acc.push(item);
+      }
+      return acc;
+    },
+    [] as { label: string; value: number }[],
+  );
 
-  const getSelectedCategoryColor = scaleOrdinal({
-    domain: transactions.map((l) => l.category),
+  const [selectedlabel, setSelectedlabel] = useState<string | null>(null);
+
+  const getSelectedlabelColor = scaleOrdinal({
+    domain: data.map((l) => l.label),
     range: [
       "rgba(66, 133, 244, 1)",
       "rgba(219, 68, 55, 1)",
@@ -70,27 +83,23 @@ export default function PieChart({
       />
       <Group top={centerY + margin.top} left={centerX + margin.left}>
         <Pie
-          data={transactions}
+          data={categorizedData}
           pieValue={value}
           pieSortValues={() => -1}
           outerRadius={radius - donutThickness * 1.3}
         >
           {(pie) => (
-            <AnimatedPie<{ category: string; value: number }>
+            <AnimatedPie<{ label: string; value: number }>
               {...pie}
               animate={animate}
-              getKey={({ data: { category } }) => category}
-              onClickDatum={({ data: { category } }) =>
+              getKey={({ data: { label } }) => label}
+              onClickDatum={({ data: { label } }) =>
                 animate &&
-                setSelectedCategory(
-                  selectedCategory && selectedCategory === category
-                    ? null
-                    : category,
+                setSelectedlabel(
+                  selectedlabel && selectedlabel === label ? null : label,
                 )
               }
-              getColor={({ data: { category } }) =>
-                getSelectedCategoryColor(category)
-              }
+              getColor={({ data: { label } }) => getSelectedlabelColor(label)}
             />
           )}
         </Pie>

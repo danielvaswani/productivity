@@ -12,7 +12,7 @@ export const transactionRouter = createTRPCRouter({
     }),
 
     post: protectedProcedure
-        .input(z.object({ value: z.number(), name: z.string(), category: z.string() }))
+        .input(z.object({ value: z.number().positive().or(z.number().negative()), name: z.string(), category: z.string() }))
         .mutation(({ input, ctx }) => {
             return ctx.db.transaction.create({
                 data: {

@@ -56,14 +56,74 @@ export default function AddTransaction() {
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
-      <input
-        type="text"
-        placeholder={`What did you ${isDebit ? "get" : "buy"}?`}
-        className="input"
-        onChange={(e: { target: HTMLInputElement }) =>
-          setTransactionName(e.target.value)
-        }
-      />
+      <div className="flex w-full items-center justify-evenly gap-2">
+        <h3 className="text-3xl">€</h3>
+        <label className="swap swap-rotate h-12 w-12 rounded border bg-black bg-opacity-30">
+          {/* this hidden checkbox controls the state */}
+          <input type="checkbox" checked={isDebit} onClick={toggleIsDebit} />
+
+          {/* minus icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="swap-on h-4 w-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+
+          {/* plus icon */}
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="swap-off h-4 w-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 12h-15"
+            />
+          </svg>
+        </label>
+        <input
+          type="number"
+          min="0.00"
+          step="any"
+          className="input flex"
+          onChange={(e: { target: HTMLInputElement }) =>
+            setCurrencyAmount(parseFloat(e.target.value))
+          }
+          onFocus={() => setIsEditingCurrencyAmount(true)}
+          onBlur={() => {
+            setIsEditingCurrencyAmount(false);
+            setCurrencyAmount(Number(Number(currencyAmount).toFixed(2)));
+          }}
+          value={
+            !isEditingCurrencyAmount
+              ? Number(currencyAmount).toFixed(2)
+              : currencyAmount
+          }
+        />
+        <input
+          type="text"
+          placeholder={`What did you ${isDebit ? "get" : "buy"}?`}
+          className="input w-full"
+          onChange={(e: { target: HTMLInputElement }) =>
+            setTransactionName(e.target.value)
+          }
+        />
+        {/* {selectedOptionIndex} */}
+      </div>
       <div className="divider divider-horizontal" />
       <select className="select" id="select-category" onChange={changeCategory}>
         <option disabled selected>
@@ -75,68 +135,6 @@ export default function AddTransaction() {
         {/* Add new category option */}
         <option>+ New category</option>
       </select>
-      <div className="flex items-center gap-4">
-        <h3 className="text-4xl">€</h3>
-        <div>
-          <label className="swap swap-rotate h-12 rounded border bg-black bg-opacity-30 px-[0.85rem]">
-            {/* this hidden checkbox controls the state */}
-            <input type="checkbox" checked={isDebit} onClick={toggleIsDebit} />
-
-            {/* minus icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="swap-on h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-
-            {/* plus icon */}
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="swap-off h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 12h-15"
-              />
-            </svg>
-          </label>
-          <input
-            type="number"
-            min="0.00"
-            step="any"
-            className="input w-40"
-            onChange={(e: { target: HTMLInputElement }) =>
-              setCurrencyAmount(parseFloat(e.target.value))
-            }
-            onFocus={() => setIsEditingCurrencyAmount(true)}
-            onBlur={() => {
-              setIsEditingCurrencyAmount(false);
-              setCurrencyAmount(Number(Number(currencyAmount).toFixed(2)));
-            }}
-            value={
-              !isEditingCurrencyAmount
-                ? Number(currencyAmount).toFixed(2)
-                : currencyAmount
-            }
-          />
-        </div>
-        {/* {selectedOptionIndex} */}
-      </div>
       <button
         className="btn px-8"
         onClick={() => {

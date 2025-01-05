@@ -1,5 +1,4 @@
-import { Transaction } from "@prisma/client";
-import Head from "next/head";
+import type { Transaction } from "@prisma/client";
 import PieChart from "~/components/PieChart";
 import AddTransaction from "~/components/AddTransaction";
 import TransactionCard from "~/components/TransactionCard";
@@ -53,12 +52,12 @@ export default function Budgeting() {
     .filter((t) => Number(t.value) < 0)
     .map((t) => ({
       label: t.label,
-      value: Math.abs(Number(t.value)!),
+      value: Math.abs(Number(t.value)),
     }));
 
   pieData = [
     ...pieData,
-    { label: balance! < 0 ? "Debt" : "Remaining", value: Math.abs(balance) },
+    { label: balance < 0 ? "Debt" : "Remaining", value: Math.abs(balance) },
   ];
 
   return (
@@ -67,11 +66,11 @@ export default function Budgeting() {
         <PieChart width={500} height={500} data={pieData} />
         <div className="text-5xl">Your Balance</div>
         <div className={`text-4xl ${balance < 0 ? "text-red-500" : ""}`}>
-          €{balance?.toFixed(2)}
+          €{balance.toFixed(2)}
         </div>
         <div className="inline-flex gap-3 text-sm">
           Total Income: €{income}
-          {balance! < 0 && (
+          {balance < 0 && (
             <div className="text-sm text-red-500">Total Spent: €{spent}</div>
           )}
         </div>

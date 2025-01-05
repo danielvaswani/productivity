@@ -1,9 +1,8 @@
-import Head from "next/head";
 import { useState } from "react";
 import AddTodoForm from "~/components/AddTodoForm";
 import TodoCard from "~/components/TodoCard";
 import { api } from "~/utils/api";
-import { Todo } from "@prisma/client";
+import type { Todo } from "@prisma/client";
 
 export default function TodoList() {
   const utils = api.useUtils();
@@ -59,9 +58,8 @@ export default function TodoList() {
     console.log("toggled todo");
   };
 
-  const deleteTodo = (id: number, pos: number) => {
+  const deleteTodo = (id: number, _pos: number) => {
     removeTodo.mutate({ id: id });
-    console.log("deleted todo");
   };
 
   const moveUpQuery = api.todo.moveUp.useMutation({
@@ -91,7 +89,7 @@ export default function TodoList() {
       return { previousTodos };
     },
     onError(_err, _newTodo, context) {
-      utils.todo.getAll.setData(undefined, context!.previousTodos!);
+      utils.todo.getAll.setData(undefined, context?.previousTodos);
     },
     async onSettled() {
       await utils.todo.getAll.invalidate();
@@ -124,7 +122,7 @@ export default function TodoList() {
       return { previousTodos };
     },
     onError(_err, _newTodo, context) {
-      utils.todo.getAll.setData(undefined, context!.previousTodos!);
+      utils.todo.getAll.setData(undefined, context?.previousTodos);
     },
     async onSettled() {
       await utils.todo.getAll.invalidate();
@@ -198,12 +196,12 @@ export default function TodoList() {
       {todos.data && todos.data.length > 0 && (
         <div
           className="flex h-6 w-96 items-center justify-center hover:border-red-600 motion-safe:hover:scale-105"
-          onDragEnter={() => setCurrentLine(todos.data!.length)}
+          onDragEnter={() => setCurrentLine(todos.data?.length)}
           onDragOver={(e) => e.preventDefault()}
         >
           <div
             className={`h-px w-64 motion-safe:hover:scale-105 ${
-              currentLine === todos.data!.length ? "bg-red-500" : "bg-slate-300"
+              currentLine === todos.data?.length ? "bg-red-500" : "bg-slate-300"
             }`}
           ></div>
         </div>

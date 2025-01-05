@@ -1,4 +1,4 @@
-import { Todo } from "@prisma/client";
+import type { Todo } from "@prisma/client";
 import { api } from "~/utils/api";
 
 type AddTodoFormProps = {

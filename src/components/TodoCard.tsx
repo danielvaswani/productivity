@@ -1,4 +1,4 @@
-import { Todo } from "@prisma/client";
+import type { Todo } from "@prisma/client";
 import { useState } from "react";
 
 type TodoCardProps = {

@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 
 export default function AddTransaction() {
   const [isDebit, setIsDebit] = useState(false);
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
   const addTransaction = api.transaction.post.useMutation({
     async onMutate(newTransaction) {

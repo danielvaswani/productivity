@@ -12,6 +12,8 @@ export default function Budgeting() {
   const [isCategoryMode, setIsCategoryMode] = useState(true);
   const transactions = api.transaction.getAll.useQuery();
 
+  const toggleIsCategoryMode = () => setIsCategoryMode(!isCategoryMode);
+
   const balance =
     transactions.data?.reduce(
       (acc: number, transaction: Transaction) =>
@@ -73,7 +75,47 @@ export default function Budgeting() {
             <div className="text-sm text-red-500">Total Spent: €{spent}</div>
           )}
         </div>
+        <label className="swap swap-rotate h-12 rounded border bg-black bg-opacity-30 px-[0.85rem]">
+          {/* this hidden checkbox controls the state */}
+          <input
+            type="checkbox"
+            checked={isCategoryMode}
+            onClick={toggleIsCategoryMode}
+          />
 
+          {/* minus icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="swap-on h-4 w-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+
+          {/* plus icon */}
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="swap-off h-4 w-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 12h-15"
+            />
+          </svg>
+        </label>
         <AddTransaction />
         {transactions.data
           ?.sort(

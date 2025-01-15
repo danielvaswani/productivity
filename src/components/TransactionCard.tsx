@@ -114,17 +114,17 @@ export default function TransactionCard({
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
+    <div className="flex flex-col gap-4 rounded-xl bg-black/10 p-4 hover:bg-black/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-md">{transaction.name}</h3>
+          <h3 className="text-md w-32">{transaction.name}</h3>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            strokeWidth={2}
             stroke="currentColor"
-            className="h-4 w-4"
+            className="h-4 w-4 cursor-pointer"
             onClick={editName}
           >
             <path
@@ -138,9 +138,9 @@ export default function TransactionCard({
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            strokeWidth={2}
             stroke="red"
-            className="h-4 w-4"
+            className="h-4 w-4 cursor-pointer"
             onClick={deleteCard}
           >
             <path
@@ -159,9 +159,9 @@ export default function TransactionCard({
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              strokeWidth={2}
               stroke="currentColor"
-              className="h-3 w-3"
+              className="h-3 w-3 cursor-pointer"
               onClick={editValue}
             >
               <path
@@ -173,16 +173,16 @@ export default function TransactionCard({
           </div>
 
           <div className="flex items-center gap-1">
-            <div className="text-sm text-purple-300">
+            <div className="text-sm text-blue-500 dark:text-purple-300">
               {transaction.category}
             </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              strokeWidth={2}
               stroke="currentColor"
-              className="h-3 w-3"
+              className="h-3 w-3 cursor-pointer"
               onClick={editCategory}
             >
               <path

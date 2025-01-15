@@ -19,7 +19,7 @@ import { animated, useTransition, interpolate } from "@react-spring/web";
 // const frequency = (d: LetterFrequency) => d.frequency;
 const value = (d: { label: string; value: number }) => Number(d.value);
 
-const defaultMargin = { top: 20, right: 20, bottom: 20, left: 20 };
+const defaultMargin = { top: 0, right: 55, bottom: 0, left: 55 };
 
 export type PieProps = {
   width: number;
@@ -53,15 +53,7 @@ export default function PieChart({
 
   const getSelectedlabelColor = scaleOrdinal({
     domain: data.map((l) => l.label),
-    range: [
-      "rgba(66, 133, 244, 1)",
-      "rgba(219, 68, 55, 1)",
-      "rgba(244, 180, 0, 1)",
-      "rgba(15, 157, 88, 1)",
-      "rgba(171, 71, 188, 1)",
-      "rgba(0, 172, 193, 1)",
-      "rgba(255, 112, 67, 1)",
-    ],
+    range: ["#141E61", "#787A91", "#2E236C", "#C8ACD6", "#000000", "#555555"], // Added fuchsia color
   });
 
   if (width < 10) return null;
@@ -74,7 +66,11 @@ export default function PieChart({
   const donutThickness = 50;
 
   return (
-    <svg width={width} height={height}>
+    <svg
+      width={width}
+      height={height}
+      className={`mt-[${margin.top}px] mb-[${margin.bottom}px] -ml-[${margin.left}px] -mr-[${margin.right}px]`}
+    >
       <rect
         rx={14}
         width={width}
@@ -170,14 +166,24 @@ function AnimatedPie<Datum>({
         />
         {hasSpaceForLabel && (
           <animated.g style={{ opacity: props.opacity }}>
-            <text
+            <rect
+              x={centroidX * 1.7 - 10}
+              y={centroidY * 1.7 - 15}
+              width={getKey(arc).length * 7 + 25}
+              height="30"
               fill="white"
-              x={centroidX}
-              y={centroidY}
+              stroke="black"
+              strokeWidth="1"
+            />
+            <text
+              fill="currentColor"
+              x={centroidX * 1.7}
+              y={centroidY * 1.7}
               dy=".33em"
-              fontSize={20}
-              textAnchor="middle"
+              fontSize={13}
+              textAnchor="right"
               pointerEvents="none"
+              className="border-teal-800 font-extrabold text-fuchsia-950 shadow-inner"
             >
               {getKey(arc)}
             </text>

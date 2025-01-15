@@ -48,18 +48,21 @@ const AddTodoForm = ({ index }: AddTodoFormProps) => {
   //, handleClick
   return (
     <form
-      className="flex flex-row items-center gap-2"
+      className="flex w-full flex-row items-center gap-2 p-5"
       onSubmit={(event) => handleSubmit(event)}
     >
-      <label htmlFor="description">Add Todo</label>
       <input
         type="text"
         name="description"
         id="inputText"
-        className="rounded border-2 border-gray-500 px-1"
+        className="w-full rounded border-2 border-gray-200 p-3"
+        placeholder="Add a Todo List item here..."
       />
-      <button type="submit" className="rounded border-2 border-gray-500 px-1">
-        Submit
+      <button
+        type="submit"
+        className="w-36 rounded bg-purple-700 p-3 font-semibold text-white shadow-lg shadow-purple-700/40"
+      >
+        Add Todo
       </button>
     </form>
   );

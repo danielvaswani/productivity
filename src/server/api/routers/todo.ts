@@ -43,15 +43,16 @@ export const todoRouter = createTRPCRouter({
         }
         ),
     moveUp: protectedProcedure
-        .input(z.object({ id: z.number().gt(0), currentPos: z.number(), newPos: z.number() }))
+        .input(z.object({ id: z.number().gte(0), currentPos: z.number().gt(0), newPos: z.number().gt(0) }))
         .mutation(({ input, ctx }) => {
             return ctx.db.$transaction(async (prisma) => {
 
                 await prisma.todo.updateMany({
                     where: {
                         userId: ctx.session.user.id, pos: {
-                            gte: input.newPos
-                        }
+                            gte: input.newPos,
+                            lt: input.currentPos
+                        },
                     },
                     data: {
                         pos: {
@@ -69,14 +70,15 @@ export const todoRouter = createTRPCRouter({
             });
         }),
     moveDown: protectedProcedure
-        .input(z.object({ id: z.number().gt(0), currentPos: z.number(), newPos: z.number() }))
+        .input(z.object({ id: z.number().gte(0), currentPos: z.number().gt(0), newPos: z.number().gt(0) }))
         .mutation(({ input, ctx }) => {
             return ctx.db.$transaction(async (prisma) => {
 
                 await prisma.todo.updateMany({
                     where: {
                         userId: ctx.session.user.id, pos: {
-                            lte: input.newPos
+                            gt: input.currentPos,
+                            lte: input.newPos,
                         }
                     },
                     data: {

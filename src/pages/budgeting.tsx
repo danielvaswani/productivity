@@ -97,8 +97,8 @@ export default function Budgeting() {
               handleToggle={toggleIsCategoryMode}
             />
           </div>
-          {categories.map((category) => (
-            <ReportBox {...category}></ReportBox>
+          {categories.map((category, index) => (
+            <ReportBox key={index} {...category}></ReportBox>
           ))}
         </div>
       </div>

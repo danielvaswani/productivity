@@ -7,7 +7,7 @@ export default function Index() {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     redirect: {
-      destination: "/todos",
+      destination: "todos",
       permanent: false,
     },
   };

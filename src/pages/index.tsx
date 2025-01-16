@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 
 export default function Index() {
-  return null;
+  return <></>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

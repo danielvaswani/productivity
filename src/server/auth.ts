@@ -8,7 +8,7 @@ import {
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import AzureADProvider from "next-auth/providers/azure-ad"
+// import AzureADProvider from "next-auth/providers/azure-ad"
 
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
@@ -63,11 +63,11 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
-    AzureADProvider({
-      clientId: env.AZURE_AD_CLIENT_ID,
-      clientSecret: env.AZURE_AD_CLIENT_SECRET,
-      tenantId: env.AZURE_AD_TENANT_ID,
-    })
+    // AzureADProvider({
+    //   clientId: env.AZURE_AD_CLIENT_ID,
+    //   clientSecret: env.AZURE_AD_CLIENT_SECRET,
+    //   tenantId: env.AZURE_AD_TENANT_ID,
+    // })
     /**
      * ...add more providers here.
      *

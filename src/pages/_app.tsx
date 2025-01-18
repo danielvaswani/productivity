@@ -1,5 +1,5 @@
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import { type AppType } from "next/app";
 import Navbar from "~/components/Navbar";
 
@@ -13,9 +13,18 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Navbar />
-      <Component {...pageProps} />
+      <AuthedComponent children={<Component {...pageProps} />} />
     </SessionProvider>
+  );
+};
+
+const AuthedComponent = ({ children }: { children: React.ReactNode }) => {
+  const sessionData = useSession();
+  return (
+    <>
+      <Navbar />
+      {sessionData && children}
+    </>
   );
 };
 

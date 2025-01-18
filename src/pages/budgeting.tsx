@@ -89,22 +89,26 @@ export default function Budgeting() {
         <div className="-mb-8 text-4xl font-bold lg:ml-4 lg:self-start">
           Budgeting
         </div>
-        <PieChart width={650} height={650} data={pieData} />
-        <div className="relative -mt-8 flex justify-center gap-4">
-          <div className="absolute right-0 top-0 -mt-16">
-            <ShowExpenses
-              show={isCategoryMode}
-              handleToggle={toggleIsCategoryMode}
-            />
+        {transactions.data && transactions.data.length > 0 && (
+          <PieChart width={650} height={650} data={pieData} />
+        )}
+        {transactions.data && transactions.data.length > 0 && (
+          <div className="relative -mt-8 flex justify-center gap-4">
+            <div className="absolute right-0 top-0 -mt-16">
+              <ShowExpenses
+                show={isCategoryMode}
+                handleToggle={toggleIsCategoryMode}
+              />
+            </div>
+            {categories.map((category, index) => (
+              <ReportBox key={index} {...category}></ReportBox>
+            ))}
           </div>
-          {categories.map((category, index) => (
-            <ReportBox key={index} {...category}></ReportBox>
-          ))}
-        </div>
+        )}
       </div>
       <div className="flex w-full flex-col gap-8 px-6 lg:w-1/2">
         <AddTransaction />
-        {transactions.data && (
+        {transactions.data && transactions.data.length > 0 && (
           <TransactionList transactions={transactions.data} />
         )}
       </div>

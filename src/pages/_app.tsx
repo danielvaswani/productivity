@@ -25,7 +25,7 @@ const AuthedComponent = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      {sessionData && children}
+      {sessionData.data && children}
     </>
   );
 };

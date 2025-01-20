@@ -26,11 +26,11 @@ export default function Navbar() {
                   stroke="currentColor"
                   className="ml-2 h-5 w-5"
                 >
-                  <path
+                  {/* <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M13.5 4.5l6 6-6 6M4.5 12h15"
-                  />
+                  /> */}
                 </svg>
               </>
             ) : (

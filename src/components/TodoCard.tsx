@@ -79,7 +79,7 @@ const TodoCard = ({
         </div>
         <div className="group flex w-full items-center justify-between">
           <p
-            className={`ml-10 break-words text-black dark:text-white ${todo.isComplete ? "text-opacity-50 line-through" : ""}`}
+            className={`ml-10 max-w-[70%] break-words text-black dark:text-white ${todo.isComplete ? "text-opacity-50 line-through" : ""}`}
             style={{
               fontSize:
                 todo.description.length > 25

@@ -14,44 +14,11 @@ export default function Navbar() {
     >
       {sessionData ? (
         <Link href={currentUrl.slice(1) === "todos" ? "/budgeting" : "/todos"}>
-          <button className="m-3 flex rounded-md bg-white/10 px-7 py-3 text-sm font-semibold text-black no-underline transition hover:bg-white/20 dark:text-white">
-            {currentUrl.slice(1) === "todos" ? (
-              <>
-                <div>Budgeting</div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="ml-2 h-5 w-5"
-                >
-                  {/* <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5l6 6-6 6M4.5 12h15"
-                  /> */}
-                </svg>
-              </>
-            ) : (
-              <>
-                <div>Todo List</div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="ml-2 h-5 w-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5l6 6-6 6M4.5 12h15"
-                  />
-                </svg>
-              </>
-            )}
+          <button className="m-3 flex items-center rounded-md bg-white/10 px-7 py-3 text-sm font-semibold text-black no-underline transition hover:bg-white/20 dark:text-white">
+            <div>
+              {currentUrl.slice(1) === "todos" ? "Budgeting" : "Todo List"}
+            </div>
+            <ArrowSVG />
           </button>
         </Link>
       ) : (
@@ -71,5 +38,24 @@ export default function Navbar() {
         {!sessionData && "to Get Started"}
       </div>
     </div>
+  );
+}
+
+function ArrowSVG() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className="ml-2 mt-1 h-5 w-5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 6.0l6 6-6 6M4.5 12h15"
+      />
+    </svg>
   );
 }
